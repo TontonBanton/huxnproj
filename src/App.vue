@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" style="height: 5rem;">
+  <img alt="Vue logo" src="./assets/logo.png" style="height: 3rem;">
   <MainForm/>
 </template>
 

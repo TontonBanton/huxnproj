@@ -1,10 +1,13 @@
 <template>
   <h2>To Do List</h2>
-  <h3 style="font-size: 1rem;">Takeways: vmodel, @click, @keyup.enter, v-for ,array push/splice</h3>
+  <h3 style="font-size: 1rem;">Takeways: ref, template ref , v-model,  v-for, @click, @keyup.enter, array push/splice</h3>
 
   <div class="todo-app">
     <div class="task-input">
-      <input type="text" placeholder="Enter Task" v-model="newTask" @keyup.enter="addTask">
+      <input type="text" placeholder="Enter Task"
+        v-model="newTask"
+        @keyup.enter="addTask"
+        ref="myRef">
       <button @click="addTask">Add Task</button>
     </div>
     <ul class="task-list">
@@ -18,18 +21,22 @@
 
 <script setup>
 import { ref } from 'vue'
+const myRef = ref(null)
 const newTask = ref('')
 const tasks = ref([])
+
 const addTask = () => {
   if (newTask.value.trim() !=='') {
     tasks.value.push(newTask.value)
     newTask.value = ''
+    myRef.value.focus()
   }
 }
 
 const removeTask = (index) => {
   tasks.value.splice(index,1)
 }
+
 </script>
 
 <style scoped>
@@ -41,25 +48,15 @@ const removeTask = (index) => {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.app-title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #333;
-}
-
 .task-input {
   display: flex;
   gap: 10px;
 }
-
 input {
   flex: 1;
   padding: 8px;
   font-size: 14px;
 }
-
 button {
   padding: 8px 12px;
   font-size: 14px;
@@ -69,16 +66,13 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
-
 button:hover {
   background-color: #45a049;
 }
-
 .task-list {
   list-style: none;
   padding: 0;
 }
-
 .task-item {
   display: flex;
   justify-content: space-between;
@@ -89,7 +83,6 @@ button:hover {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
-
 .remove-button {
   padding: 6px 10px;
   font-size: 12px;
@@ -99,7 +92,6 @@ button:hover {
   border-radius: 3px;
   cursor: pointer;
 }
-
 .remove-button:hover {
   background-color: #c0392b;
 }
