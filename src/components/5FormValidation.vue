@@ -1,12 +1,12 @@
 <template>
   <h2>5. Form Validation</h2>
-  <h3 style="font-size: 1rem;">Takeways: v-if(), String trim/regex/length, form-submit.prevent , :disabled </h3>
+  <h3 style="font-size: 1rem;">Takeways: computed(), v-if(), String trim/regex/length, form-submit.prevent , :disabled </h3>
   <div>
     <form @submit.prevent="submitForm" class="custom-form">
       <div class="form-group">
         <label for="name">Name: </label>
         <input v-model="formData.name" type="text" id="name">
-        <span v-if="!isNameValid" class="error">Name is required</span>
+        <span v-if="!isNameValid" class="error">Name is required</span>      <!--Show div as long as name validation is false-->
       </div>
       <div class="form-group">
         <label for="email">Email: </label>
@@ -19,7 +19,8 @@
         <span v-if="!isPasswordValid" class="error">Password must be at least 8 characters</span>
       </div>
 
-      <button type="submit" :disabled="!isPasswordValid" class="submit-button">Submit</button>
+      <!--Button will only enable if all data is valid isFormValid==True -->
+      <button type="submit" :disabled="!isFormValid" class="submit-button">Submit</button>
     </form>
   </div>
 </template>
@@ -32,11 +33,11 @@ const formData = ref({
   password: ''
 })
 
-//VALIDATIONS
+//VALIDATIONS return True/False
 const isNameValid = computed(()=> formData.value.name.trim() !== '')                                  //Check Not Empty after trimming whitespace
 const isEmailValid = computed(()=> /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.value.email))           //See REGEX
 const isPasswordValid = computed(()=> formData.value.password.length >= 8)                            //Character length
-const isFormValid = computed(()=> isNameValid.value  && isEmailValid.value && isPasswordValid.value)  //For button enable if all is true
+const isFormValid = computed(()=> isNameValid.value  && isEmailValid.value && isPasswordValid.value)  //For button enable attribute if all is true
 
 const submitForm = ()=> {
   if (isFormValid.value) {

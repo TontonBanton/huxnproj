@@ -1,10 +1,20 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" style="height: 3rem;">
-  <MainForm/>
+  <div>
+    <img @click="resetProject" alt="Vue logo" src="./assets/logo.png" style="height: 3rem;">
+    <MainPage :resetValue="resetValue"/>
+  </div>
 </template>
 
 <script setup>
-import MainForm from './components/MainPage'
+import { ref } from 'vue'
+import MainPage from './components/MainPage';
+
+const resetValue = ref(0);
+const resetProject = () => {
+  resetValue.value++;
+  alert(`reset this from showProject: ${resetValue.value}`)
+};
+
 </script>
 
 <style>
@@ -17,3 +27,4 @@ import MainForm from './components/MainPage'
   margin-top: 5px;
 }
 </style>
+
