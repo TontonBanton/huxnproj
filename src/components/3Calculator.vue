@@ -1,6 +1,6 @@
 <template>
   <h2>Calculator</h2>
-  <h3 style="font-size: 1rem;">Takeways: computed, :class (Dynamic Class binding), eval (Evaluate expression as string - Not recommended)</h3>
+  <h3 style="font-size: 1rem;">Takeways: computed(), :class (Dynamic Class binding), eval (Evaluate expression as string - Not recommended)</h3>
   <div class="calculator">
     <input v-model="display" :class="displayClass" readonly>
     <div class="buttons">

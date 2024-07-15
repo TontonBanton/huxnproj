@@ -4,6 +4,7 @@
     <button @click="showProject = 2">2. Random Quote Generator</button>
     <button @click="showProject = 3">3. Calculator</button>
     <button @click="showProject = 4">4. Accordion</button>
+    <button @click="showProject = 5">5. Form Validation</button>
   </div>
   <hr>
 
@@ -11,6 +12,7 @@
   <div v-if="showProject === 2"><Proj2Comp/></div>
   <div v-if="showProject === 3"><Proj3Comp/></div>
   <div v-if="showProject === 4"><Proj4Comp/></div>
+  <div v-if="showProject === 5"><Proj5Comp/></div>
 
 </template>
 
@@ -20,6 +22,8 @@ import Proj1Comp from './1ToDoList'
 import Proj2Comp from './2RandomQuote'
 import Proj3Comp from './3Calculator'
 import Proj4Comp from './4Accordion'
+import Proj5Comp from './5FormValidation'
+
 
 const showProject = ref(0) //default value
 </script>
