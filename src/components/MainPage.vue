@@ -7,6 +7,8 @@
       <button @click="showProject = 4">4. Accordion</button>
       <button @click="showProject = 5">5. Form Validation</button>
       <button @click="showProject = 6">6. Password Generator</button>
+      <button @click="showProject = 7">7. Progress Steps</button>
+      <button @click="showProject = 8">8. Dad Jokes</button>
     </div>
     <hr>
     <div v-if="showProject === 1"><Proj1Comp/></div>
@@ -15,6 +17,8 @@
     <div v-if="showProject === 4"><Proj4Comp/></div>
     <div v-if="showProject === 5"><Proj5Comp/></div>
     <div v-if="showProject === 6"><Proj6Comp/></div>
+    <div v-if="showProject === 7"><Proj7Comp/></div>
+    <div v-if="showProject === 8"><Proj8Comp/></div>
   </div>
 </template>
 
@@ -26,6 +30,8 @@ import Proj3Comp from './3Calculator';
 import Proj4Comp from './4Accordion';
 import Proj5Comp from './5FormValidation';
 import Proj6Comp from './6PasswordGenerator';
+import Proj7Comp from './7ProgressSteps';
+import Proj8Comp from './8DadJokes';
 
 const showProject = ref(0);
 const props2 = defineProps(['resetValue'])
