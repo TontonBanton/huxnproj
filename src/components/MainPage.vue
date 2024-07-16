@@ -9,6 +9,8 @@
       <button @click="showProject = 6">6. Password Generator</button>
       <button @click="showProject = 7">7. Progress Steps</button>
       <button @click="showProject = 8">8. Dad Jokes</button>
+      <button @click="showProject = 9">9. GitHub User Search</button>
+      <button @click="showProject = 10">10. Wikipedia Clone</button>
     </div>
     <hr>
     <div v-if="showProject === 1"><Proj1Comp/></div>
@@ -19,6 +21,8 @@
     <div v-if="showProject === 6"><Proj6Comp/></div>
     <div v-if="showProject === 7"><Proj7Comp/></div>
     <div v-if="showProject === 8"><Proj8Comp/></div>
+    <div v-if="showProject === 9"><Proj9Comp/></div>
+    <div v-if="showProject === 10"><Proj10Comp/></div>
   </div>
 </template>
 
@@ -32,6 +36,8 @@ import Proj5Comp from './5FormValidation';
 import Proj6Comp from './6PasswordGenerator';
 import Proj7Comp from './7ProgressSteps';
 import Proj8Comp from './8DadJokes';
+import Proj9Comp from './9GitHubSearch';
+import Proj10Comp from './10WikiClone';
 
 const showProject = ref(0);
 const props2 = defineProps(['resetValue'])

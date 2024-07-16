@@ -9,17 +9,16 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from 'axios'
-
+import axios from 'axios'       //Axios Import
 const joke = ref(null)
 
-const fetchJoke = async()=> {
+const fetchJoke = async()=> {                                               //Async -> Function
   try {
-    const response = await axios.get('https://icanhazdadjoke.com', {
-      headers: {Accept: 'application/json'}
+    const response = await axios.get('https://icanhazdadjoke.com', {        //Await -> Axios.get
+      headers: {Accept: 'application/json'}                                 //Tells the server that the client expects a JSON response.
     })
     joke.value = response.data.joke
-  } catch(error) {
+  } catch(error) {                                                          //Catch Error
     console.error('Error fetching data:', error)
   }
 }
@@ -35,17 +34,11 @@ const fetchJoke = async()=> {
   padding: 10px 15px;
   font-size: 16px;
   background-color: #4caf50;
-  color: #fff;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
 .dad-joke {
-  border: 1px solid #ddd;
-  border-radius: 4px;
   padding: 15px;
   margin-top: 20px;
-  background-color: #f9f9f9;
-  color: #333;
 }
 </style>
