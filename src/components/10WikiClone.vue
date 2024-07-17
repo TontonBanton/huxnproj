@@ -1,31 +1,31 @@
 <template>
-  <div :class="{ 'dark-theme': isDarkTheme}">
+  <!-- Dynamic Class Binding - applies to this div and all its child -->
+  <div :class="{ 'dark-theme': isDarkTheme}">     <!-- If isDarkTheme=true class is applied - <div class="dark-theme">  -->
     <div class="container">
+
       <div class="header-container">
         <h1>Search Wikipedia</h1>
-        <span id="theme-toggler" @click="toggleTheme">{{ isDarkTheme ? 'Light': 'Dark' }}</span>
+        <span id="theme-toggler" @click="toggleTheme">{{ isDarkTheme ? 'Light': 'Dark' }}</span>   <!-- Toggle the text in span -->
       </div>
 
       <form @submit.prevent="submitSearch">
-        <input type="text" v-model="searchQuery" placeholder="Enter Search Query">
+        <input type="text" id="search-input" v-model="searchQuery" placeholder="Enter Search Query">
         <button type="submit">Search</button>
       </form>
 
       <div id="search-result">
-        <div v-if="isLoading" class="spinner">Loading...</div>
-
+        <div v-if="isLoading" class="spinner">Loading...</div>    <!-- Show when isLoading=true -->
         <div v-if="searchResults.length">
           <div v-for="(result) in searchResults" :key="result.pageid" class="result-item">
-            <h3 class="result-title">
-              <a :href="`https://en.wikipedia.org/?curid=${result.pageid}`" target="_blank" rel="noopener">
+            <a class="result-title"
+                :href="`https://en.wikipedia.org/?curid=${result.pageid}`" target="_blank" rel="noopener">    <!-- Searched Title as link -->
                 {{ result.title }}
-              </a>
-            </h3>
+            </a>
             <a class="result-link"
-              :href="`https://en.wikipedia.org/?curid=${result.pageid}`"  target="_blank" rel="noopener">
+              :href="`https://en.wikipedia.org/?curid=${result.pageid}`"  target="_blank" rel="noopener">     <!-- The link as link -->
               {{ `https://en.wikipedia.org/?curid=${result.pageid}`}}
             </a>
-            <p class="result-snippet" v-html="result.snippet"></p>
+            <p class="result-snippet" v-html="result.snippet"></p>                                            <!--result snippet (v-html - to render its actual content) -->
           </div>
         </div>
       </div>
@@ -44,13 +44,13 @@ const isLoading = ref(false)
 const error = ref(null)
 const isDarkTheme = ref(false)
 
-const toggleTheme = ()=> {
+const toggleTheme = ()=> {                              //Toggler for theme <span>
   isDarkTheme.value = !isDarkTheme.value
 }
 
-const submitSearch = ()=> {
-  if (searchQuery.value.trim() !== '') {
-    searchWikipedia(searchQuery.value)
+const submitSearch = ()=> {                             //Main submit button function
+  if (searchQuery.value.trim() !== '') {                //Check if <input> is not blank
+    searchWikipedia(searchQuery.value)                  //Run searchWikipedia(<searchQuery) from <input>
   } else {
     searchResults.value = []
     error.value = 'Please enter a search query'
@@ -58,25 +58,26 @@ const submitSearch = ()=> {
 }
 
 const searchWikipedia = async (query)=> {
-  const encodedQuery = encodeURIComponent(query)
+  const encodedQuery = encodeURIComponent(query) //SECURITY safely include input in a URL - returns a new string where certain characters are replaced representing the UTF-8 encoding.
+
   const endpoint = `https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=10&srsearch=${encodedQuery}`
   try{
-    isLoading.value = true
-    const response = await fetch(endpoint)
-    const data =  await response.json()
+    isLoading.value = true                                //Run the loading spinner
+    const response = await fetch(endpoint)                //Fetch request to endpoint
+    const data =  await response.json()                   //Save to data parsed json object from response
 
-    if (data.query && data.query.search) {
+    if (data.query && data.query.search) {                //Check if there are results
       searchResults.value = data.query.search
       error.value = null
     } else {
       searchResults.value = null
       error.value = 'No results found'
     }
-  } catch(err) {                                                                    //Catch Error from Try-Catch
+  } catch(err) {                                            //Catch Error from Try-Catch
     console.error('Error fetching data: ', err)
     searchResults.value([])
     error.value = 'An error occured while fetching data'
-  } finally {
+  } finally {                                               //Finally - runs whether there is an error or none
     isLoading.value = false
   }
 }
@@ -86,34 +87,24 @@ const searchWikipedia = async (query)=> {
 <style scoped>
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
 }
 .container {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
+  text-align: left;
 }
 h1 {
-  font-size: 3rem;
-  margin-bottom: 2rem;
-}
-#search-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 #search-input {
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 0.5rem 1rem;
   margin-right: 1rem;
-  border: 2px solid #ccc;
   border-radius: 0.25rem;
   flex-grow: 1;
 }
 #search-input:focus {
-  outline: none;
   border-color: #0074d9;
 }
 button[type='submit'] {
@@ -129,14 +120,14 @@ button[type='submit']:hover {
   background-color: #0063ad;
 }
 #search-results {
-  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 .result-item {
-  margin-bottom: 1rem;
+  margin-top: .8rem;
 }
 .result-title {
-  font-size: 1.5rem;
-  margin-top: 0;
+  font-size: 1.3rem;
+  margin-bottom: 0;
 }
 .result-link {
   display: block;
@@ -154,11 +145,9 @@ button[type='submit']:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
   height: 10rem;
 }
-
-/* Dark theme */
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -166,12 +155,12 @@ button[type='submit']:hover {
 }
 #theme-toggler {
   border: none;
-  background: transparent;
   cursor: pointer;
   background: #e2e2e2;
   padding: 10px 20px;
   border-radius: 100px;
 }
+/* Dark theme */
 .dark-theme {
   background-color: #282c34;
   color: #fff;
